@@ -1,18 +1,37 @@
 import { Request, Response } from "express";
 import User from "../models/User";
+import Shop from "../models/Shop";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+import slugify from "slugify";
 require("dotenv").config();
 
 /**
- * POST /api/register
- * @route create a new user
+ * @route /api/register
+ * @method POST
+ * @description create a new user
  */
 export const register = async (req: Request, res: Response) => {
+  const { shopName, city, state } = req.body;
   try {
     let newUser = new User(req.body);
     await newUser.save();
+
+    if (newUser?.userType?.toLowerCase() === "seller") {
+      let newShop = new Shop({
+        shopName,
+        city,
+        state,
+        slug: slugify(shopName, {
+          replacement: "-",
+          lower: true,
+          strict: false,
+        }),
+      });
+      await newShop.save();
+    }
+
     return res.status(200).json({ success: true, data: newUser });
   } catch (error) {
     return res.status(500).json({ success: false, data: error });
@@ -20,8 +39,9 @@ export const register = async (req: Request, res: Response) => {
 };
 
 /**
- * POST /api/authenticate
- * @route log in api
+ * @route /api/authenticate
+ * @method POST
+ * @description login api for user
  */
 export const authenticate = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -54,6 +74,7 @@ export const authenticate = async (req: Request, res: Response) => {
             id: user._id,
             fullname: user.fullName,
             email: user.email,
+            type: user.userType,
             token: token,
           };
           return res.status(200).json({ success: true, data: credentials });
