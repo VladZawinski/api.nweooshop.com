@@ -3,10 +3,12 @@ import crypto from "crypto";
 import mongoose from "mongoose";
 
 export type UserDocument = mongoose.Document & {
+  fullName: string;
   email: string;
   password: string;
   userType: string; // seller or buyer
-
+  createdAt: Date;
+  updatedAt: Date;
   comparePassword: comparePasswordFunction;
 };
 
@@ -17,7 +19,18 @@ type comparePasswordFunction = (
 
 const userSchema = new mongoose.Schema<UserDocument>(
   {
-    email: { type: String, unique: true },
+    fullName: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      required: true,
+    },
     password: { type: String },
     userType: { type: String }, // seller or buyer
   },
@@ -60,3 +73,7 @@ const comparePassword: comparePasswordFunction = function (
 };
 
 userSchema.methods.comparePassword = comparePassword;
+
+const User = mongoose.model<UserDocument>("User", userSchema);
+
+export default User;

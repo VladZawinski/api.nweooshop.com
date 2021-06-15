@@ -1,10 +1,11 @@
 // Controllers (route handlers)
-import * as testController from "./controllers/test.controller";
+import * as authController from "./controllers/auth.controller";
 
 /**
  * Primary app routes.
  */
 
 module.exports = function (app: any) {
-  app.get("/", testController.index);
+  app.post("/api/register", authController.register);
+  app.post("/api/authenticate", authController.authenticate);
 };
