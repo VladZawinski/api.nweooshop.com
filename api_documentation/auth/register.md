@@ -2,7 +2,22 @@
 
 This API is used to register user with email
 
-Params 
+## if User is Seller, open shop by automatically
+
+Seller Params 
+
+```
+    {
+	    "fullName" 	: <string>,
+    	"email" 		: "<email>",
+        "shopName"      : "<string>",
+        "city"          : "<string>",
+        "state"         : "<string>",
+    	"password" 		: "<string>" (minimum 8 character),
+    	"password_confirmation" : "<string>"
+    }
+```
+Buyer Params 
 
 ```
     {
@@ -12,6 +27,7 @@ Params
     	"password_confirmation" : "<string>"
     }
 ```
+
 Response Errors
 
 ```
