@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { UserDocument } from "./User";
+import { nanoid } from "nanoid";
 
 export type ShopDocument = mongoose.Document & {
   shopName: string;
@@ -8,6 +9,8 @@ export type ShopDocument = mongoose.Document & {
   _user: UserDocument;
   city: string;
   state: string;
+  isVerify: boolean;
+  uniqueId: string;
   shopProfile: string;
   shopCoverPhoto: string;
   phoneNumbers: string[];
@@ -30,12 +33,21 @@ const shopSchema = new mongoose.Schema<ShopDocument>(
     _user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     city: { type: String },
     state: { type: String },
+    isVerify: { type: Boolean, default: false },
+    uniqueId: { type: String },
     shopProfile: { type: String },
     shopCoverPhoto: { type: String },
     phoneNumbers: { type: Array },
   },
   { timestamps: true }
 );
+
+shopSchema.pre("save", function save(next) {
+  const shop = this as ShopDocument;
+
+  shop.uniqueId = nanoid(6);
+  next();
+});
 
 const Shop = mongoose.model<ShopDocument>("Shop", shopSchema);
 
