@@ -1,6 +1,5 @@
 import express from "express";
 import session from "express-session";
-import bodyParser from "body-parser";
 import MongoStore from "connect-mongo";
 import path from "path";
 import mongoose from "mongoose";
@@ -31,6 +30,7 @@ mongoose
   });
 
 // Express configuration
+app.set("port", process.env.PORT || 8000);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -50,6 +50,9 @@ app.use((req: any, res: any, next) => {
   res.locals.user = req.user;
   next();
 });
+
+// Bring in our routes list
+require('./routes')(app);
 
 app.use(
   express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
