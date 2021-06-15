@@ -3,6 +3,8 @@ import User from "../models/User";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+require("dotenv").config();
+
 /**
  * POST /api/register
  * @route create a new user
@@ -44,7 +46,7 @@ export const authenticate = async (req: Request, res: Response) => {
         if (isMatch) {
           var token = jwt.sign(
             { credentials: `${user._id}.${user.fullName}.${user.email}` },
-            "API_VERSION_0_1",
+            process.env.jwtSecret,
             {}
           );
 

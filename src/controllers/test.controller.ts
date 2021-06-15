@@ -5,5 +5,15 @@ import { Request, Response } from "express";
  * @route GET /
  */
 export const index = (req: Request, res: Response) => {
-  return res.status(200).json({ success: true, data: "Welcome" });
+  let items = [
+    {
+      id: 1,
+      name: 'Test',
+    },
+    {
+      id: 2,
+      name: 'Now, u see me',
+    },
+  ]
+  return res.status(200).json({ success: true, data: items });
 };
