@@ -1,1 +1,1 @@
-web: yarn build-ts && yarn start
+web: node dist/server.js
