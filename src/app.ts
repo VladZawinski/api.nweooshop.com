@@ -54,6 +54,7 @@ app.use((req: any, res: any, next) => {
 // Bring in our routes list
 require('./routes')(app);
 
+
 app.use(
   express.static(path.join(__dirname + "public"))
 );
