@@ -8,8 +8,7 @@
     "serve-debug": "nodemon --inspect dist/server.js",
     "serve": "node dist/server.js",
     "start": "npm run serve",
-    "postinstall": "tsc",
-    "deploy": "git add . && git commit -m Heroku && git push heroku master"
+    "postinstall": "tsc"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
