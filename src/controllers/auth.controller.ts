@@ -28,9 +28,10 @@ export const register = async (req: Request, res: Response) => {
           lower: true,
           strict: false,
         }),
+        _user: newUser?._id,
       });
       await newShop.save();
-    }
+    }newUser
 
     return res.status(200).json({ success: true, data: newUser });
   } catch (error) {

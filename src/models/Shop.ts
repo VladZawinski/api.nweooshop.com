@@ -37,7 +37,7 @@ const shopSchema = new mongoose.Schema<ShopDocument>(
     uniqueId: { type: String },
     shopProfile: { type: String },
     shopCoverPhoto: { type: String },
-    phoneNumbers: { type: Array },
+    phoneNumbers: [{ type: Array }],
   },
   { timestamps: true }
 );

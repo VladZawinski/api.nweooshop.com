@@ -54,8 +54,10 @@ app.use((req: any, res: any, next) => {
 // Bring in our routes list
 require('./routes')(app);
 
+console.log(__dirname + "../src/public")
+
 app.use(
-  express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
+  express.static(path.join(__dirname + "/../src/public"))
 );
 
 export default app;
