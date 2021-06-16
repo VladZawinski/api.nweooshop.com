@@ -27,6 +27,29 @@ export const index = async (req: Request, res: Response) => {
 };
 
 /**
+ * @route /api/products/lastest?limit=5
+ * @method GET
+ * @description fetch lastest products by created Date
+ */
+
+export const lastest = async (req: Request, res: Response) => {
+  let { limit } = req.query as any;
+
+  let limitting = parseInt(limit);
+
+  await Product.find()
+    .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
+    .limit(limitting || 8)
+    .sort({ _id: -1 })
+    .then((products) => {
+      return res.status(200).json({ success: true, data: products });
+    })
+    .catch((error) => {
+      return res.status(500).json({ success: true, data: "Error" });
+    });
+};
+
+/**
  * @route /api/products/:uniqueId
  * @method GET
  * @description fetch product detail by uniqueId

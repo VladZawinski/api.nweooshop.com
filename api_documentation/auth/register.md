@@ -1,30 +1,26 @@
-```POST "/api/register"```
+`POST "/api/register"`
 
 This API is used to register user with email
 
-## if User is Seller, open shop by automatically
-
-Seller Params 
+Seller Params
 
 ```
-    {
-	    "fullName" 	: <string>,
-    	"email" 		: "<email>",
-        "shopName"      : "<string>",
-        "city"          : "<string>",
-        "state"         : "<string>",
-    	"password" 		: "<string>" (minimum 8 character),
-    	"password_confirmation" : "<string>"
-    }
+    "email"     : "<email>",
+	"password"  : "<string>",
+	"userType"  : "<string>", => seller or buyer
+	"fullName"  : "<string>",
+	"shopName"  : "<string>",
 ```
-Buyer Params 
+#### *If user is seller, shop is automatically register.
+
+Buyer Params
 
 ```
     {
-	    "fullName" 	: <string>,
-    	"email" 		: "<email>",
-    	"password" 		: "<string>" (minimum 8 character),
-    	"password_confirmation" : "<string>"
+	    "fullName" 	: "<string>",
+    	"email"     : "<email>",
+    	"password" 	: "<string>" (minimum 8 character),
+			"userType"  : "<string>" => seller or buyer
     }
 ```
 
@@ -33,8 +29,9 @@ Response Errors
 ```
     500 -> server error
 ```
+
 Response Success
 
 ```
-    200 	-> success 
+    200 	-> success ( user info with token )
 ```
