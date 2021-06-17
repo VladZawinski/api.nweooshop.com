@@ -1,6 +1,6 @@
 ## User Register
 
-`GET /api/register`
+`POST /api/register`
 
 This API is used to register user.
 
@@ -67,7 +67,7 @@ if userType is seller, please provide ```seller property``` in Body.
 
 ## User Login or Authenticate
 
-`GET /api/authenticate`
+`POST /api/authenticate`
 
 This API is used to authenticate user.
 
