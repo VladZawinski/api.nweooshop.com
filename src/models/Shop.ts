@@ -9,7 +9,6 @@ export type ShopDocument = mongoose.Document & {
   _user: UserDocument;
   city: string;
   state: string;
-  isVerify: boolean;
   uniqueId: string;
   shopProfile: string;
   shopCoverPhoto: string;
@@ -33,7 +32,6 @@ const shopSchema = new mongoose.Schema<ShopDocument>(
     _user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     city: { type: String },
     state: { type: String },
-    isVerify: { type: Boolean, default: false },
     uniqueId: { type: String },
     shopProfile: { type: String },
     shopCoverPhoto: { type: String },

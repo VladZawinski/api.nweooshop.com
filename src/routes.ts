@@ -2,7 +2,7 @@
 import * as authController from "./controllers/auth.controller";
 import * as shopController from "./controllers/shop.controller";
 import * as productController from "./controllers/product.controller";
-
+import * as categoryController from "./controllers/category.controller";
 import verifyToken from "./libs/verifyToken";
 
 /**
@@ -23,4 +23,8 @@ module.exports = function (app: any) {
   app.get("/api/products/:uniqueId", verifyToken, productController.detail);
   app.post("/api/product", verifyToken, productController.create);
   /* Product */
+
+  /* Category */
+  app.post("/api/category", verifyToken, categoryController.create);
+  /* Category */
 };

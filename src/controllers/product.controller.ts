@@ -16,6 +16,7 @@ export const index = async (req: Request, res: Response) => {
       "-email -password -userType -_id -createdAt -updatedAt -__v"
     )
     .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
+    .populate("_category", "-_id -updatedAt -createdAt -__v")
     .limit(limit)
     .sort({ createdAt: -1 })
     .then((products) => {
