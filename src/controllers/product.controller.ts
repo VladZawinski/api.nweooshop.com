@@ -28,12 +28,12 @@ export const index = async (req: Request, res: Response) => {
 };
 
 /**
- * @route /api/products/lastest?limit=5
+ * @route /api/products/latest?limit=5
  * @method GET
- * @description fetch lastest products by created Date
+ * @description fetch latest products by created Date
  */
 
-export const lastest = async (req: Request, res: Response) => {
+export const latest = async (req: Request, res: Response) => {
   let { limit } = req.query as any;
 
   let limitting = parseInt(limit);

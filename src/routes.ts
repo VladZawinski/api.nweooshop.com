@@ -19,7 +19,7 @@ module.exports = function (app: any) {
 
   /* Product */
   app.get("/api/products", verifyToken, productController.index);
-  app.get("/api/products/lastest", verifyToken, productController.lastest);
+  app.get("/api/products/latest", verifyToken, productController.latest);
   app.get("/api/products/:uniqueId", verifyToken, productController.detail);
   app.post("/api/product", verifyToken, productController.create);
   /* Product */
