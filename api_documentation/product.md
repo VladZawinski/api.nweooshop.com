@@ -64,7 +64,7 @@ No Params Needed
         "path": "/food-and-bevrage/dessert",
         "uniqueId": "GnIz_F"
       },
-      "categoryName": "food-and-bevrage",
+      "categoryId": "fuqjed",
       "createdAt": "2021-06-16T12:33:37.901Z",
       "updatedAt": "2021-06-16T12:33:37.901Z",
       "uniqueId": "7Tx0bf",
@@ -143,7 +143,7 @@ No Params Needed
         "path": "/food-and-bevrage/dessert",
         "uniqueId": "GnIz_F"
       },
-      "categoryName": "food-and-bevrage",
+      "categoryId": "isopwe",
       "createdAt": "2021-06-16T12:33:37.901Z",
       "updatedAt": "2021-06-16T12:33:37.901Z",
       "uniqueId": "7Tx0bf",

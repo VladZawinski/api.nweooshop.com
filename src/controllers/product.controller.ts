@@ -40,10 +40,12 @@ export const latest = async (req: Request, res: Response) => {
 
   await Product.find()
     .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
+    .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
+    .populate("_category", "-_id -updatedAt -createdAt -__v")
     .limit(limitting || 8)
     .sort({ _id: -1 })
     .then((products) => {
-      return res.status(200).json({ success: true, data: products });
+      return res.status(200).json({ success: true, data: products || [] });
     })
     .catch((error) => {
       return res.status(500).json({ success: true, data: "Error" });

@@ -19,7 +19,7 @@ export type ProductDocument = mongoose.Document & {
   delivery: string;
   payment: string;
   _category: CategoryDocument;
-  categoryName: string;
+  categoryId: string;
 };
 
 const productSchema = new mongoose.Schema<ProductDocument>(
@@ -41,7 +41,7 @@ const productSchema = new mongoose.Schema<ProductDocument>(
     delivery: { type: String },
     payment: { type: String },
     _category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
-    categoryName: { type: String },
+    categoryId: { type: String },
   },
   { timestamps: true }
 );
