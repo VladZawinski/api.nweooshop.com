@@ -99,9 +99,10 @@ export const create = async (req: Request, res: Response) => {
  */
 
 export const categoryProducts = async (req: Request, res: Response) => {
-  let { limit, uniqueId } = req.query as any;
+  let { limit } = req.query as any;
+  let { uniqueId } = req.params as any;
 
-  let limitting = parseInt(limit);
+  let limitting = parseInt(limit);  
 
   await Product.find({ categoryId: uniqueId })
     .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
