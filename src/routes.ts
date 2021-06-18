@@ -22,6 +22,11 @@ module.exports = function (app: any) {
   app.get("/api/products/latest", verifyToken, productController.latest);
   app.get("/api/products/:uniqueId", verifyToken, productController.detail);
   app.post("/api/product", verifyToken, productController.create);
+  app.get(
+    "/api/products/category/:uniqueId",
+    verifyToken,
+    productController.categoryProducts
+  );
   /* Product */
 
   /* Category */

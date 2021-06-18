@@ -91,3 +91,28 @@ export const create = async (req: Request, res: Response) => {
     return res.status(500).json({ success: true, data: "Error" });
   }
 };
+
+/**
+ * @route /api/products/category/:uniqueId?limit=5
+ * @method GET
+ * @description fetch products that related to request category uniqueId
+ */
+
+export const categoryProducts = async (req: Request, res: Response) => {
+  let { limit, uniqueId } = req.query as any;
+
+  let limitting = parseInt(limit);
+
+  await Product.find({ categoryId: uniqueId })
+    .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
+    .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
+    .populate("_category", "-_id -updatedAt -createdAt -__v")
+    .limit(limitting || 8)
+    .sort({ _id: -1 })
+    .then((products) => {
+      return res.status(200).json({ success: true, data: products });
+    })
+    .catch((error) => {
+      return res.status(500).json({ success: true, data: "Error" });
+    });
+};
