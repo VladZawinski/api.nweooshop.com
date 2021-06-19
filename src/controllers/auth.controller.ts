@@ -74,7 +74,7 @@ export const authenticate = async (req: Request, res: Response) => {
           );
 
           const credentials = {
-            id: user._id,
+            _id: user._id,
             fullname: user.fullName,
             email: user.email,
             type: user.userType,
@@ -129,7 +129,7 @@ export const buyerRegister = async (req: Request, res: Response) => {
         );
 
         const credentials = {
-          id: newBuyer._id,
+          _id: newBuyer._id,
           fullname: newBuyer.fullName,
           email: newBuyer.email,
           token: token,
@@ -184,7 +184,7 @@ export const buyerLogin = async (req: Request, res: Response) => {
 
           let findUserInfo = await UserInfo.findOne({ user: user?._id });
           const credentials = {
-            id: user._id,
+            _id: user._id,
             fullname: user.fullName,
             email: user.email,
             token: token,
