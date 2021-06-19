@@ -31,5 +31,6 @@ module.exports = function (app: any) {
 
   /* Category */
   app.post("/api/category", verifyToken, categoryController.create);
+  app.get("/api/parent/categories", verifyToken, categoryController.parentCategory);
   /* Category */
 };

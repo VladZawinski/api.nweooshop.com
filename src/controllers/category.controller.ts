@@ -20,3 +20,21 @@ export const create = async (req: Request, res: Response) => {
       .json({ success: false, data: "Error while creating category" });
   }
 };
+
+/**
+ * @route /api/parent/categories
+ * @method GET
+ * @description fetch parent categories
+ */
+
+export const parentCategory = async (req: Request, res: Response) => {
+  await Category.find({ parent: "/" })
+    .then((data) => {
+      return res.status(200).json({ success: true, data });
+    })
+    .catch((err) => {
+      return res
+        .status(500)
+        .json({ success: false, data: "Error while creating category" });
+    });
+};
