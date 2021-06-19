@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { UserDocument } from "./User";
 import { ShopDocument } from "./Shop";
 import { CategoryDocument } from "./Category";
+import { PaymentDocument } from "./Payment";
 import { nanoid } from "nanoid";
 import slugify from "slugify";
 
@@ -17,7 +18,7 @@ export type ProductDocument = mongoose.Document & {
   price: string;
   estimatedPrice: number;
   delivery: string;
-  payment: string;
+  payment: PaymentDocument[];
   _category: CategoryDocument;
   categoryId: string;
 };
@@ -39,7 +40,7 @@ const productSchema = new mongoose.Schema<ProductDocument>(
     price: { type: String },
     estimatedPrice: { type: Number, required: true },
     delivery: { type: String },
-    payment: { type: String },
+    payment: [{ type: mongoose.Schema.Types.ObjectId, ref: "Payment" }],
     _category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     categoryId: { type: String },
   },

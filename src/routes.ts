@@ -3,6 +3,7 @@ import * as authController from "./controllers/auth.controller";
 import * as shopController from "./controllers/shop.controller";
 import * as productController from "./controllers/product.controller";
 import * as categoryController from "./controllers/category.controller";
+import * as paymentController from "./controllers/payment.controller";
 import verifyToken from "./libs/verifyToken";
 
 /**
@@ -29,8 +30,19 @@ module.exports = function (app: any) {
   );
   /* Product */
 
+  /* Payments */
+  app.get("/api/payments", verifyToken, paymentController.index);
+  app.post("/api/payment", verifyToken, paymentController.create);
+  app.put("/api/payments/:uniqueId", verifyToken, paymentController.update);
+  app.delete("/api/payments/:uniqueId", verifyToken, paymentController.destroy);
+  /* Payments */
+
   /* Category */
   app.post("/api/category", verifyToken, categoryController.create);
-  app.get("/api/parent/categories", verifyToken, categoryController.parentCategory);
+  app.get(
+    "/api/parent/categories",
+    verifyToken,
+    categoryController.parentCategory
+  );
   /* Category */
 };

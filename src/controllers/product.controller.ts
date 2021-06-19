@@ -17,6 +17,8 @@ export const index = async (req: Request, res: Response) => {
     )
     .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
     .populate("_category", "-_id -updatedAt -createdAt -__v")
+    .populate("payment", "-_id -updatedAt -createdAt -__v")
+
     .limit(limit)
     .sort({ createdAt: -1 })
     .then((products) => {
@@ -42,6 +44,8 @@ export const latest = async (req: Request, res: Response) => {
     .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
     .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
     .populate("_category", "-_id -updatedAt -createdAt -__v")
+    .populate("payment", "-_id -updatedAt -createdAt -__v")
+
     .limit(limitting || 8)
     .sort({ _id: -1 })
     .then((products) => {
@@ -102,7 +106,7 @@ export const categoryProducts = async (req: Request, res: Response) => {
   let { limit } = req.query as any;
   let { uniqueId } = req.params as any;
 
-  let limitting = parseInt(limit);  
+  let limitting = parseInt(limit);
 
   await Product.find({ categoryId: uniqueId })
     .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
