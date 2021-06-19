@@ -17,7 +17,9 @@ export const detail = async (req: Request, res: Response) => {
     if (!findUser)
       return res.status(404).json({ success: false, data: "User Not Found" });
 
-    let getUserInfo = await UserInfo.findOne({ user: findUser?._id });
+    let getUserInfo = await UserInfo.findOne({ user: findUser?._id }).populate(
+      "user", "-password -__v"
+    );
     return res.status(200).json({ success: true, data: getUserInfo });
   } catch (error) {
     return res.status(500).json({ success: false, data: "Error" });
