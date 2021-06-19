@@ -71,6 +71,7 @@ export const detail = async (req: Request, res: Response) => {
       "-email -password -userType -_id -createdAt -updatedAt -__v"
     )
     .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
+    .populate("payment", "-_id -updatedAt -createdAt -__v")
     .then((product) => {
       return res.status(200).json({ success: true, data: product });
     })
@@ -112,6 +113,7 @@ export const categoryProducts = async (req: Request, res: Response) => {
     .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
     .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
     .populate("_category", "-_id -updatedAt -createdAt -__v")
+    .populate("payment", "-_id -updatedAt -createdAt -__v")
     .limit(limitting || 8)
     .sort({ _id: -1 })
     .then((products) => {
