@@ -22,10 +22,14 @@ function verifyToken(req: Request | any, res: Response, next: NextFunction) {
 }
 
 function decodedCredentials(decoded: any) {
-  let credentials = decoded.credentials.split(`${process.env.jwtSecret}`);
+  const { _id, fullname, email, address, phoneNumbers } =
+    decoded.credentials as any;
   return {
-    userId: credentials[0],
-    email: credentials[1],
+    _id,
+    fullname,
+    email,
+    address,
+    phoneNumbers,
   };
 }
 

@@ -1,6 +1,6 @@
 // Controllers (route handlers)
 import * as authController from "./controllers/auth.controller";
-import * as userController from './controllers/user.controller';
+import * as userController from "./controllers/user.controller";
 import * as shopController from "./controllers/shop.controller";
 import * as productController from "./controllers/product.controller";
 import * as categoryController from "./controllers/category.controller";
@@ -13,11 +13,10 @@ import verifyToken from "./libs/verifyToken";
 module.exports = function (app: any) {
   app.post("/api/register", authController.register);
   app.post("/api/authenticate", authController.authenticate);
-  app.post('/api/buyer/register', authController.buyerRegister);
-  app.post('/api/buyer/login', authController.buyerLogin);
+  app.post("/api/buyer/register", authController.buyerRegister);
+  app.post("/api/buyer/login", authController.buyerLogin);
 
-  app.get('/api/user/:id', userController.detail);
-
+  app.get("/api/auth/user", verifyToken, userController.authUser);
 
   /* shop */
   app.get("/api/shops", verifyToken, shopController.index);

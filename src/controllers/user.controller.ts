@@ -3,25 +3,16 @@ import User from "../models/User";
 import UserInfo from "../models/UserInfo";
 
 /**
- * @route /api/user/:id
+ * @route /api/auth/user
  * @method GET
- * @description fetch user detail by object id
+ * @description fetch current User
  */
 
-export const detail = async (req: Request, res: Response) => {
-  let { id } = req.params as any;
-
+export const authUser = async (req: Request | any, res: Response) => {
   try {
-    let findUser = await User.findById(id);
-
-    if (!findUser)
-      return res.status(404).json({ success: false, data: "User Not Found" });
-
-    let getUserInfo = await UserInfo.findOne({ user: findUser?._id }).populate(
-      "user", "-password -__v"
-    );
-    return res.status(200).json({ success: true, data: getUserInfo });
+    if (req.credentials)
+      return res.status(200).json({ success: true, data: req.credentials });
   } catch (error) {
-    return res.status(500).json({ success: false, data: "Error" });
+    return res.status(400).json({ success: false, data: "Invalid Token!" });
   }
 };

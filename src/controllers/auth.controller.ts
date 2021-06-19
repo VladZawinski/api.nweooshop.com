@@ -122,21 +122,19 @@ export const buyerRegister = async (req: Request, res: Response) => {
       if (saveUserInfo) {
         var token = jwt.sign(
           {
-            credentials: `${newBuyer._id}.${newBuyer.fullName}.${newBuyer.email}`,
+            credentials: {
+              _id: newBuyer._id,
+              fullname: newBuyer.fullName,
+              email: newBuyer.email,
+              address: saveUserInfo?.address,
+              phoneNumbers: saveUserInfo?.phoneNumbers,
+            },
           },
           process.env.jwtSecret,
           {}
         );
 
-        const credentials = {
-          _id: newBuyer._id,
-          fullname: newBuyer.fullName,
-          email: newBuyer.email,
-          token: token,
-          address: saveUserInfo?.address,
-          phoneNumbers: saveUserInfo?.phoneNumbers,
-        };
-        return res.status(200).json({ success: true, data: credentials });
+        return res.status(200).json({ success: true, data: token });
       }
 
       return res.status(500).json({
@@ -176,22 +174,22 @@ export const buyerLogin = async (req: Request, res: Response) => {
             .json({ success: false, data: "Email or Password is incorrect" });
         }
         if (isMatch) {
+          let findUserInfo = await UserInfo.findOne({ user: user?._id });
+
           var token = jwt.sign(
-            { credentials: `${user._id}.${user.fullName}.${user.email}` },
+            {
+              credentials: {
+                _id: user._id,
+                fullname: user.fullName,
+                email: user.email,
+                address: findUserInfo?.address,
+                phoneNumbers: findUserInfo?.phoneNumbers,
+              },
+            },
             process.env.jwtSecret,
             {}
           );
-
-          let findUserInfo = await UserInfo.findOne({ user: user?._id });
-          const credentials = {
-            _id: user._id,
-            fullname: user.fullName,
-            email: user.email,
-            token: token,
-            address: findUserInfo?.address,
-            phoneNumbers: findUserInfo?.phoneNumbers,
-          };
-          return res.status(200).json({ success: true, data: credentials });
+          return res.status(200).json({ success: true, data: token });
         }
       }
     );
