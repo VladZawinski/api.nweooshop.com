@@ -12,6 +12,8 @@ import verifyToken from "./libs/verifyToken";
 module.exports = function (app: any) {
   app.post("/api/register", authController.register);
   app.post("/api/authenticate", authController.authenticate);
+  app.post('/api/buyer/register', authController.buyerRegister);
+  app.post('/api/buyer/login', authController.buyerLogin);
 
   /* shop */
   app.get("/api/shops", verifyToken, shopController.index);
