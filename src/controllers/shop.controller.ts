@@ -10,7 +10,7 @@ import Shop from "../models/Shop";
 export const index = async (req: Request, res: Response) => {
   let { limit } = req.query as any;
 
-  let limitting = parseInt(limit)
+  let limitting = parseInt(limit);
 
   await Shop.find()
     .limit(limitting || 10)

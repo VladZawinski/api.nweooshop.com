@@ -47,6 +47,13 @@ shopSchema.pre("save", function save(next) {
   next();
 });
 
+shopSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc: any, ret: any) {
+    delete ret._id;
+  },
+});
 const Shop = mongoose.model<ShopDocument>("Shop", shopSchema);
 
 export default Shop;
