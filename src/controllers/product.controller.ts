@@ -129,3 +129,33 @@ export const categoryProducts = async (req: Request, res: Response) => {
       return res.status(500).json({ success: true, data: "Error" });
     });
 };
+
+/**
+ * @route /api/products/shop/:id?limit=5
+ * @method GET
+ * @description fetch products that related to request shop uniqueId
+ */
+
+ export const shopProducts = async (req: Request, res: Response) => {
+  let { limit } = req.query as any;
+  let { id } = req.params as any;
+
+  let limitting = parseInt(limit);
+
+  await Product.find({ _shop: id })
+    .populate("_shop", "-_id -_user -createdAt -updatedAt -__v")
+    .populate(
+      "_user",
+      "-email -password -userType -_id -createdAt -updatedAt -__v"
+    )
+    .populate("_category", "-_id -updatedAt -createdAt -__v")
+    .populate("payment", "-_id -updatedAt -createdAt -__v")
+    .limit(limitting || 8)
+    .sort({ _id: -1 })
+    .then((products) => {
+      return res.status(200).json({ success: true, data: products });
+    })
+    .catch((error) => {
+      return res.status(500).json({ success: true, data: "Error" });
+    });
+};

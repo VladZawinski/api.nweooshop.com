@@ -33,6 +33,11 @@ module.exports = function (app: any) {
     verifyToken,
     productController.categoryProducts
   );
+  app.get(
+    "/api/products/shop/:id",
+    verifyToken,
+    productController.shopProducts
+  );
   /* Product */
 
   /* Payments */
