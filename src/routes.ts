@@ -64,5 +64,6 @@ module.exports = function (app: any) {
 
   /* Order */
 
-  app.get("/api/states", verifyToken, stateController.index);
+  app.get("/api/states", stateController.index);
+  app.get("/api/cities/:stateId", stateController.fetchCities);
 };
