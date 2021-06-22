@@ -7,9 +7,9 @@ import Order from "../models/Order";
  */
 
 export const create = async (req: Request, res: Response) => {
+  let { credentials } = req as any;
   const {
     shopId,
-    customerId,
     transaction,
     productUniqueId,
     isDigitalCash,
@@ -28,7 +28,7 @@ export const create = async (req: Request, res: Response) => {
       paymentStatus: isDigitalCash ? 1 : 0,
       itemPrice,
       itemCount,
-      customer: customerId,
+      customer: credentials._id,
       remarks,
     });
 
