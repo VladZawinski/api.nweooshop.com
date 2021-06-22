@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/User";
 import UserInfo from "../models/UserInfo";
-
+import Order from "../models/Order";
 /**
  * @route /api/auth/user
  * @method GET
@@ -15,4 +15,26 @@ export const authUser = async (req: Request | any, res: Response) => {
   } catch (error) {
     return res.status(400).json({ success: false, data: "Invalid Token!" });
   }
+};
+
+/**
+ * @route /api/buyer/:id/orders
+ * @method GET
+ * @description fetch auth user's order list
+ */
+
+export const getBuyerOrders = async (req: Request | any, res: Response) => {
+  const { id } = req.params as any;
+  await Order.find({ customer: id })
+    .populate("customer", "-password -userType -createdAt -updatedAt -__v")
+    .populate("shop")
+    .populate("transaction.paymentType", "-_id -createdAt -updatedAt -__v")
+    .then((data) => {
+      return res.status(200).json({ success: true, data });
+    })
+    .catch((error) => {
+      return res
+        .status(500)
+        .json({ success: false, data: "Error while fetching orders" });
+    });
 };

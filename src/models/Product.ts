@@ -59,6 +59,14 @@ productSchema.pre("save", function save(next) {
   next();
 });
 
+productSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc: any, ret: any) {
+    delete ret._id;
+  },
+});
+
 const Product = mongoose.model<ProductDocument>("Product", productSchema);
 
 export default Product;

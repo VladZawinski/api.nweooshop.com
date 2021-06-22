@@ -1,26 +1,41 @@
 import mongoose from "mongoose";
 import { PaymentDocument } from "./Payment";
 import { UserDocument } from "./User";
-import { ProductDocument } from "./Product";
+import { ShopDocument } from "./Shop";
 import { nanoid } from "nanoid";
 
 export type OrderDocument = mongoose.Document & {
   orderId: string;
-  paymentMethod: PaymentDocument;
-  status: string; // 'pending', 'confirmed', 'processing', 'deliver', 'done'
+  shopId: ShopDocument;
+  transcation: object;
+  isDigitalCash: boolean;
+  paymentStatus: number; // 0 for no cash, 1 to cash
+  productName: string;
+  productUniqueId: string; // product unique Id nk product detail ko pym kyi ml
+  itemPrice: number;
+  itemCount: number;
+  status: string; // 'pending', 'confirmed', 'processing', 'take out', 'shipped'
   customer: UserDocument;
-  products: ProductDocument;
-  uniqueId: string;
+  remarks: string;
 };
 
 const orderSchema = new mongoose.Schema<OrderDocument>(
   {
-    orderId: { type: String },
-    paymentMethod: { type: mongoose.Schema.Types.ObjectId, ref: "Payment" },
+    shopId: { type: mongoose.Schema.Types.ObjectId, ref: "Shop" },
+    isDigitalCash: { type: Boolean, required: true },
+    transaction: {
+      paymentType: { type: mongoose.Schema.Types.ObjectId, ref: "Payment" },
+      transactionId: { type: String },
+      transactionUsername: { type: String },
+    },
+    productName: { type: String, required: true },
+    paymentStatus: { type: Number },
+    productUniqueId: { type: String, required: true },
+    itemPrice: { type: Number, required: true },
+    itemCount: { type: Number, required: true },
     status: { type: String, default: "pending" },
     customer: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    products: { type: mongoose.Schema.Types.ObjectId, ref: "Products" },
-    uniqueId: { type: String },
+    remarks: { type: String },
   },
   { timestamps: true }
 );
@@ -28,7 +43,7 @@ const orderSchema = new mongoose.Schema<OrderDocument>(
 orderSchema.pre("save", function save(next) {
   const order = this as OrderDocument;
 
-  order.uniqueId = nanoid(6);
+  order.orderId = `NS_${nanoid(6)}`;
   next();
 });
 

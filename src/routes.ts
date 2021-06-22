@@ -5,6 +5,8 @@ import * as shopController from "./controllers/shop.controller";
 import * as productController from "./controllers/product.controller";
 import * as categoryController from "./controllers/category.controller";
 import * as paymentController from "./controllers/payment.controller";
+import * as orderController from "./controllers/order.controller";
+import * as stateController from "./controllers/state.controller";
 import verifyToken from "./libs/verifyToken";
 
 /**
@@ -55,4 +57,12 @@ module.exports = function (app: any) {
     categoryController.parentCategory
   );
   /* Category */
+
+  /* Order */
+  app.post("/api/order", verifyToken, orderController.create);
+  app.get("/api/buyer/:id/orders", verifyToken, userController.getBuyerOrders);
+
+  /* Order */
+
+  app.get("/api/states", verifyToken, stateController.index);
 };
