@@ -3,6 +3,8 @@ import { UserDocument } from "./User";
 
 export type UserInfoDocument = mongoose.Document & {
   user: UserDocument;
+  city: string;
+  state: string;
   address: string;
   secondaryAddress: string;
   phoneNumbers: string[];
@@ -14,6 +16,12 @@ const userInfoSchema = new mongoose.Schema<UserInfoDocument>(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+    },
+    city: {
+      type: String,
+    },
+    state: {
+      type: String,
     },
     address: {
       type: String,
@@ -28,7 +36,6 @@ const userInfoSchema = new mongoose.Schema<UserInfoDocument>(
   },
   { timestamps: true }
 );
-
 
 const UserInfo = mongoose.model<UserInfoDocument>("UserInfo", userInfoSchema);
 

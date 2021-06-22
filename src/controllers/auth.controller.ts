@@ -73,11 +73,17 @@ export const authenticate = async (req: Request, res: Response) => {
             {}
           );
 
+          let getUserInfo = await UserInfo.findOne({ user: user._id });
+
           const credentials = {
             _id: user._id,
             fullname: user.fullName,
             email: user.email,
+            city: getUserInfo?.city,
+            state: getUserInfo?.state,
+            address: getUserInfo?.address,
             type: user.userType,
+            phoneNumbers: getUserInfo?.phoneNumbers,
             token: token,
           };
           return res.status(200).json({ success: true, data: credentials });
@@ -97,8 +103,16 @@ export const authenticate = async (req: Request, res: Response) => {
  * @description create a new buyer account
  */
 export const buyerRegister = async (req: Request, res: Response) => {
-  const { fullName, email, password, address, secondaryAddress, phoneNumbers } =
-    req.body;
+  const {
+    fullName,
+    email,
+    password,
+    city,
+    state,
+    address,
+    secondaryAddress,
+    phoneNumbers,
+  } = req.body;
   try {
     let newBuyer = new User({
       fullName,
@@ -111,6 +125,8 @@ export const buyerRegister = async (req: Request, res: Response) => {
     if (newBuyer) {
       let saveUserInfo = new UserInfo({
         user: newBuyer?._id,
+        city,
+        state,
         address,
         secondaryAddress: secondaryAddress || "",
         phoneNumbers,
@@ -126,6 +142,8 @@ export const buyerRegister = async (req: Request, res: Response) => {
               _id: newBuyer._id,
               fullname: newBuyer.fullName,
               email: newBuyer.email,
+              city: saveUserInfo.city,
+              state: saveUserInfo.state,
               address: saveUserInfo?.address,
               phoneNumbers: saveUserInfo?.phoneNumbers,
             },
@@ -182,6 +200,8 @@ export const buyerLogin = async (req: Request, res: Response) => {
                 _id: user._id,
                 fullname: user.fullName,
                 email: user.email,
+                city: findUserInfo?.city,
+                state: findUserInfo?.state,
                 address: findUserInfo?.address,
                 phoneNumbers: findUserInfo?.phoneNumbers,
               },
