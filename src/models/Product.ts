@@ -47,6 +47,8 @@ const productSchema = new mongoose.Schema<ProductDocument>(
   { timestamps: true }
 );
 
+productSchema.index({ tags: "text", title: "text", description: "text" });
+
 productSchema.pre("save", function save(next) {
   const product = this as ProductDocument;
 

@@ -7,6 +7,7 @@ import * as categoryController from "./controllers/category.controller";
 import * as paymentController from "./controllers/payment.controller";
 import * as orderController from "./controllers/order.controller";
 import * as stateController from "./controllers/state.controller";
+import * as searchController from './controllers/search.controller';
 import verifyToken from "./libs/verifyToken";
 
 /**
@@ -66,4 +67,6 @@ module.exports = function (app: any) {
 
   app.get("/api/states", stateController.index);
   app.get("/api/cities/:stateId", stateController.fetchCities);
+
+  app.post("/api/search", verifyToken, searchController.search)
 };
