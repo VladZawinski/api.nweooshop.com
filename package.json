@@ -7,8 +7,7 @@
     "build-ts": "tsc",
     "serve-debug": "nodemon --inspect dist/server.js",
     "serve": "node dist/server.js",
-    "start": "npm run serve",
-    "postinstall": "tsc && mv -i -v src/public dist/ && rm -v -rf src"
+    "start": "npm run serve"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

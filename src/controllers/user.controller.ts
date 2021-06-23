@@ -24,8 +24,10 @@ export const authUser = async (req: Request | any, res: Response) => {
  */
 
 export const getBuyerOrders = async (req: Request | any, res: Response) => {
-  const { id } = req.params as any;
-  await Order.find({ customer: id })
+  const { credentials } = req as any;
+
+  if(credentials){
+    await Order.find({ customer: credentials._id })
     .populate("customer", "-password -userType -createdAt -updatedAt -__v")
     .populate("shop")
     .populate("transaction.paymentType", "-_id -createdAt -updatedAt -__v")
@@ -37,4 +39,5 @@ export const getBuyerOrders = async (req: Request | any, res: Response) => {
         .status(500)
         .json({ success: false, data: "Error while fetching orders" });
     });
+  }
 };

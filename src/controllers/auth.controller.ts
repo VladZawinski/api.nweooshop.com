@@ -104,7 +104,8 @@ export const authenticate = async (req: Request, res: Response) => {
  */
 export const buyerRegister = async (req: Request, res: Response) => {
   const {
-    fullName,
+    
+    fullName, 
     email,
     password,
     city,
