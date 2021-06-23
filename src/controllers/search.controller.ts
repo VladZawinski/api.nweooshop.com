@@ -8,13 +8,19 @@ import Product from "../models/Product";
  */
 
 export const search = async (req: Request, res: Response) => {
-  await Product.find({
-    $text: { $search: req.body.name },
-  })
-    .then((data) => {
-      return res.status(200).json({ success: true, data });
-    })
-    .catch((error) => {
-      return res.status(500).json({ success: false, data: "Error" });
+  try {
+    let searchProducts = await Product.find({
+      $text: { $search: req.body.name },
     });
+
+    if (!searchProducts) {
+      return res
+        .status(404)
+        .json({ success: false, data: "No matching with your search" });
+    }
+
+    return res.status(200).json({ success: true, data: searchProducts });
+  } catch (error) {
+    return res.status(500).json({ success: false, data: "Error" });
+  }
 };
