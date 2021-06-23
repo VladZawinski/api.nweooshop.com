@@ -1,2 +1,6 @@
-.env
+dist
 node_modules
+.gitignore
+.env
+yarn.lock
+debug.log
