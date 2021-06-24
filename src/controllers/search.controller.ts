@@ -8,6 +8,7 @@ import Product from "../models/Product";
  */
 
 export const search = async (req: Request, res: Response) => {
+  
   const {q} = req.query as any;
 
   try {
