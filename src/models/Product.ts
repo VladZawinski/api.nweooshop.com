@@ -44,7 +44,9 @@ const productSchema = new mongoose.Schema<ProductDocument>(
     _category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     categoryId: { type: String },
   },
-  { timestamps: true }
+  {
+     timestamps: true 
+  }
 );
 
 productSchema.index({ tags: "text", title: "text", description: "text" });
