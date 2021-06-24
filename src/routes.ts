@@ -61,7 +61,7 @@ module.exports = function (app: any) {
 
   /* Order */
   app.post("/api/order", verifyToken, orderController.create);
-  app.get("/api/buyer/:id/orders", verifyToken, userController.getBuyerOrders);
+  app.get("/api/buyer/orders", verifyToken, userController.getBuyerOrders);
 
   /* Order */
 
